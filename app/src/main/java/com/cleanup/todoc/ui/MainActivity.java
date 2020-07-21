@@ -1,5 +1,6 @@
 package com.cleanup.todoc.ui;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>Home activity of the application which is displayed when the user opens the app.</p>
@@ -41,18 +43,19 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
     // 1 - FOR DATA
     private TaskViewModel taskViewModel;
-    private static int PROJECT_ID = 1;
+    ArrayAdapter<Project> adapter2;
 
     /**
      * List of all projects available in the application
      */
-    private final Project[] allProjects = Project.getAllProjects();
+    private List<Project> allProjects = new ArrayList<>();
 
     /**
      * List of all current tasks of the application
      */
     @NonNull
-    private final ArrayList<Task> tasks = new ArrayList<>();
+    private List<Task> tasks = new ArrayList<>();
+    private LiveData<List<Task>> tasksLd;
 
     /**
      * The adapter which handles the list of tasks
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
         this.configureViewModel();
         this.getTasks();
+        tasksLd = taskViewModel.getTasks();
 
         listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         listTasks.setItemAnimator(new DefaultItemAnimator());
@@ -180,8 +184,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             // If both project and name of the task have been set
             else if (taskProject != null) {
                 // TODO: Replace this by id of persisted task
-                long id = tasks.size();
-
+                long id = (long) (Math.random()*10000000);
+//                if (tasks.size() == 0) id = 0;
+//                else id = tasks.get(tasks.size()-1).getId() + 1;
 
                 Task task = new Task(
                         id,
@@ -235,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * Updates the list of tasks in the UI
      */
     private void updateTasks() {
-        if (tasks.size() == 0) {
+        if (tasksLd == null || tasks.size()==0) {
             lblNoTasks.setVisibility(View.VISIBLE);
             listTasks.setVisibility(View.GONE);
         } else {
@@ -307,10 +312,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * Sets the data of the Spinner with projects to associate to a new task
      */
     private void populateDialogSpinner() {
-        final ArrayAdapter<Project> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allProjects);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        getProjects();
+        adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allProjects);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if (dialogSpinner != null) {
-            dialogSpinner.setAdapter(adapter);
+            dialogSpinner.setAdapter(adapter2);
         }
     }
 
@@ -344,7 +350,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     private void configureViewModel(){
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.taskViewModel = ViewModelProviders.of(this, mViewModelFactory).get(TaskViewModel.class);
-        this.taskViewModel.init(PROJECT_ID);
     }
 
     // 3 - Get all tasks
@@ -352,8 +357,20 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         this.taskViewModel.getTasks().observe(this, this::updateTasksList);
     }
 
-    // 6 - Update the list of items
+    // 3 - Get all Projects
+    private void getProjects(){
+        this.taskViewModel.getProjects().observe(this, this::updateProjectsList);
+    }
+
+    // 6 - Update the list of Tasks
     private void updateTasksList(List<Task> tasks){
         this.adapter.updateData(tasks);
+        this.tasks = tasks;
+    }
+
+    // 6 - Update the list of Projects
+    private void updateProjectsList(List<Project> projects){
+        allProjects = projects;
+        adapter2.notifyDataSetChanged();
     }
 }

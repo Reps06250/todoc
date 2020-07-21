@@ -55,14 +55,14 @@ public abstract class ToDocDatabase extends RoomDatabase {
                 contentValues2.put("name", "Projet Lucidia");
                 contentValues2.put("color", 0xFFB4CDBA);
 
-                ContentValues contentValues3 = new ContentValues();
-                contentValues3.put("id", 3L);
-                contentValues3.put("name", "Projet Circus");
-                contentValues3.put("color", 0xFFA3CED2);
+//                ContentValues contentValues3 = new ContentValues();
+//                contentValues3.put("id", 3L);
+//                contentValues3.put("name", "Projet Circus");
+//                contentValues3.put("color", 0xFFA3CED2);
 
                 db.insert("Project", OnConflictStrategy.IGNORE, contentValues);
                 db.insert("Project", OnConflictStrategy.IGNORE, contentValues2);
-                db.insert("Project", OnConflictStrategy.IGNORE, contentValues3);
+                //db.insert("Project", OnConflictStrategy.IGNORE, contentValues3);
             }
         };
     }

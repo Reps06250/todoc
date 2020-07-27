@@ -13,6 +13,8 @@ public class TaskDataRepository {
     // --- GET ---
 
     public LiveData<List<Task>> getTasks(){ return this.taskDao.getTasks(); }
+    public List<Task> getTasksList(){ return this.taskDao.getTasksList(); }
+
 
     // --- CREATE ---
 

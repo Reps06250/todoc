@@ -1,5 +1,6 @@
 package com.cleanup.todoc.ui;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
@@ -11,8 +12,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
+import com.cleanup.todoc.injection.Injection;
+import com.cleanup.todoc.injection.ViewModelFactory;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
+import com.cleanup.todoc.viewmodel.TaskViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +28,8 @@ import java.util.List;
  */
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
 
-    private Context context;
-    private LayoutInflater layoutInflater;
 
+    TaskViewModel taskViewModel;
     /**
      * The list of tasks the adapter deals with
      */
@@ -43,8 +46,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
      * Instantiates a new TasksAdapter.
      *
      */
-    TasksAdapter(Context context, @NonNull final DeleteTaskListener deleteTaskListener) {
-        this.context = context;
+    TasksAdapter( @NonNull final DeleteTaskListener deleteTaskListener) {
         this.tasks =new ArrayList<>();
         this.deleteTaskListener = deleteTaskListener;
     }
@@ -158,6 +160,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             imgDelete.setTag(task);
 
             final Project taskProject = task.getProject();
+//            final Project taskProject = taskViewModel.getProject(task.getProjectId());
+
             if (taskProject != null) {
                 imgProject.setSupportImageTintList(ColorStateList.valueOf(taskProject.getColor()));
                 lblProjectName.setText(taskProject.getName());

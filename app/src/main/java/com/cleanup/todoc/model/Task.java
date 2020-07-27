@@ -28,6 +28,7 @@ public class Task {
     /**
      * The unique identifier of the project associated to the task
      */
+//    @ForeignKey(entity = Project.class, parentColumns = "id", childColumns = "projectId")
     private long projectId;
 
     /**

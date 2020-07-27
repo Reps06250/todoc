@@ -55,12 +55,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      */
     @NonNull
     private List<Task> tasks = new ArrayList<>();
-    private LiveData<List<Task>> tasksLd;
 
     /**
      * The adapter which handles the list of tasks
      */
-    private final TasksAdapter adapter = new TasksAdapter(this, this);
+    private final TasksAdapter adapter = new TasksAdapter(this);
 
     /**
      * The sort method to be used to display tasks
@@ -108,12 +107,12 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
         setContentView(R.layout.activity_main);
 
-        listTasks = findViewById(R.id.list_tasks);
-        lblNoTasks = findViewById(R.id.lbl_no_task);
-
         this.configureViewModel();
         this.getTasks();
-        tasksLd = taskViewModel.getTasks();
+        this.getProjects();
+
+        listTasks = findViewById(R.id.list_tasks);
+        lblNoTasks = findViewById(R.id.lbl_no_task);
 
         listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         listTasks.setItemAnimator(new DefaultItemAnimator());
@@ -184,9 +183,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             // If both project and name of the task have been set
             else if (taskProject != null) {
                 // TODO: Replace this by id of persisted task
-                long id = (long) (Math.random()*10000000);
-//                if (tasks.size() == 0) id = 0;
-//                else id = tasks.get(tasks.size()-1).getId() + 1;
+                long id ;//= (long) (Math.random()*10000000);
+                if (tasks.size() == 0) id = 0;
+                else id = tasks.get(tasks.size()-1).getId() + 1;
 
                 Task task = new Task(
                         id,
@@ -240,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * Updates the list of tasks in the UI
      */
     private void updateTasks() {
-        if (tasksLd == null || tasks.size()==0) {
+        if (tasks.size()==0) {
             lblNoTasks.setVisibility(View.VISIBLE);
             listTasks.setVisibility(View.GONE);
         } else {
@@ -312,7 +311,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * Sets the data of the Spinner with projects to associate to a new task
      */
     private void populateDialogSpinner() {
-        getProjects();
         adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allProjects);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if (dialogSpinner != null) {
@@ -354,6 +352,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
     // 3 - Get all tasks
     private void getTasks(){
+//        tasks = taskViewModel.getTasksList();
         this.taskViewModel.getTasks().observe(this, this::updateTasksList);
     }
 
@@ -366,11 +365,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     private void updateTasksList(List<Task> tasks){
         this.adapter.updateData(tasks);
         this.tasks = tasks;
+        updateTasks();
     }
 
     // 6 - Update the list of Projects
     private void updateProjectsList(List<Project> projects){
         allProjects = projects;
-        adapter2.notifyDataSetChanged();
     }
 }

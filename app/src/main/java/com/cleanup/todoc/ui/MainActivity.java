@@ -28,6 +28,7 @@ import com.cleanup.todoc.model.Task;
 import com.cleanup.todoc.viewmodel.TaskViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +43,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements TasksAdapter.DeleteTaskListener {
 
     // 1 - FOR DATA
-    private TaskViewModel taskViewModel;
+    public TaskViewModel taskViewModel;
     ArrayAdapter<Project> adapter2;
 
     /**
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * The adapter which handles the list of tasks
      */
-    private final TasksAdapter adapter = new TasksAdapter(this);
+    private TasksAdapter adapter;
 
     /**
      * The sort method to be used to display tasks
@@ -113,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
         listTasks = findViewById(R.id.list_tasks);
         lblNoTasks = findViewById(R.id.lbl_no_task);
+
+        adapter = new TasksAdapter(this);
 
         listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         listTasks.setItemAnimator(new DefaultItemAnimator());
@@ -363,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
     // 6 - Update the list of Tasks
     private void updateTasksList(List<Task> tasks){
-        this.adapter.updateData(tasks);
+        this.adapter.updateData(tasks, allProjects);
         this.tasks = tasks;
         updateTasks();
     }

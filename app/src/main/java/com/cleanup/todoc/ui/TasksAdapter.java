@@ -29,12 +29,12 @@ import java.util.List;
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
 
 
-    TaskViewModel taskViewModel;
     /**
      * The list of tasks the adapter deals with
      */
     @NonNull
     private List<Task> tasks;
+    private List<Project>projects;
 
     /**
      * The listener for when a task needs to be deleted
@@ -48,6 +48,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
      */
     TasksAdapter( @NonNull final DeleteTaskListener deleteTaskListener) {
         this.tasks =new ArrayList<>();
+        this.projects = projects;
         this.deleteTaskListener = deleteTaskListener;
     }
 
@@ -159,8 +160,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             lblTaskName.setText(task.getName());
             imgDelete.setTag(task);
 
-            final Project taskProject = task.getProject();
-//            final Project taskProject = taskViewModel.getProject(task.getProjectId());
+            final Project taskProject = getProject(task.getProjectId());
 
             if (taskProject != null) {
                 imgProject.setSupportImageTintList(ColorStateList.valueOf(taskProject.getColor()));
@@ -171,8 +171,16 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             }
         }
     }
-    public void updateData(List<Task> tasks){
+    public void updateData(List<Task> tasks, List<Project> projects){
         this.tasks = tasks;
-        this.notifyDataSetChanged();
+        this.projects = projects;
+    }
+
+    public Project getProject(Long projectId){
+        for(Project project : projects){
+            if(project.getId() == projectId)
+                return project;
+        }
+        return null;
     }
 }

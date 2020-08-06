@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
     // 1 - FOR DATA
     public TaskViewModel taskViewModel;
-    ArrayAdapter<Project> adapter2;
+    public ArrayAdapter<Project> adapter2;
 
     /**
      * List of all projects available in the application
@@ -109,8 +109,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         setContentView(R.layout.activity_main);
 
         this.configureViewModel();
-        this.getTasks();
         this.getProjects();
+        this.getTasks();
 
         listTasks = findViewById(R.id.list_tasks);
         lblNoTasks = findViewById(R.id.lbl_no_task);
@@ -355,7 +355,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
     // 3 - Get all tasks
     private void getTasks(){
-//        tasks = taskViewModel.getTasksList();
         this.taskViewModel.getTasks().observe(this, this::updateTasksList);
     }
 
@@ -374,5 +373,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     // 6 - Update the list of Projects
     private void updateProjectsList(List<Project> projects){
         allProjects = projects;
+        this.adapter.updateData(tasks, projects);
+        updateTasks();
     }
 }

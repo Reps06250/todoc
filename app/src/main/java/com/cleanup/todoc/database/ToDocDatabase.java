@@ -38,7 +38,7 @@ public abstract class ToDocDatabase extends RoomDatabase {
     }
 
 
-    private static Callback prepopulateDatabase(){
+    public static Callback prepopulateDatabase(){
         return new Callback() {
 
             @Override

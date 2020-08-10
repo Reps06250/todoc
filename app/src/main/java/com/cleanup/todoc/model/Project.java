@@ -2,9 +2,15 @@ package com.cleanup.todoc.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.cleanup.todoc.database.ToDocDatabase;
+import com.cleanup.todoc.repositories.ProjectDataRepository;
+
+import java.util.List;
 
 /**
  * <p>Models for project in which tasks are included.</p>
@@ -49,14 +55,19 @@ public class Project {
      *
      * @return all the projects of the application
      */
-    @NonNull
-    public static Project[] getAllProjects() {
-        return new Project[]{
-                new Project(1L, "Projet Tartampion", 0xFFEADAD1),
-                new Project(2L, "Projet Lucidia", 0xFFB4CDBA),
-                new Project(3L, "Projet Circus", 0xFFA3CED2),
-        };
-    }
+//    @NonNull
+//    public static Project[] getAllProjects() {
+//
+//        return new Project[]{
+//                new Project(1L, "Projet Tartampion", 0xFFEADAD1),
+//                new Project(2L, "Projet Lucidia", 0xFFB4CDBA),
+//                new Project(3L, "Projet Circus", 0xFFA3CED2),
+//        };
+//    }
+//    public static List<Project> getAllProjects(Context context) {
+//        ProjectDataRepository projectDataRepository = new ProjectDataRepository(ToDocDatabase.getInstance(context).projectDao());
+//        return projectDataRepository.getAllProjects();
+//    }
 
     /**
      * Returns the project with the given unique identifier, or null if no project with that
@@ -65,14 +76,14 @@ public class Project {
      * @param id the unique identifier of the project to return
      * @return the project with the given unique identifier, or null if it has not been found
      */
-    @Nullable
-    public static Project getProjectById(long id) {
-        for (Project project : getAllProjects()) {
-            if (project.id == id)
-                return project;
-        }
-        return null;
-    }
+//    @Nullable
+//    public Project getProjectById(long id) {
+//        for (Project project : getAllProjects()) {
+//            if (project.id == id)
+//                return project;
+//        }
+//        return null;
+//    }
 
     /**
      * Returns the unique identifier of the project.

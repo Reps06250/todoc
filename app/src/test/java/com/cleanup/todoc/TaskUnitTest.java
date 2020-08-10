@@ -1,12 +1,15 @@
 package com.cleanup.todoc;
 
+import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -18,17 +21,33 @@ import static org.junit.Assert.assertSame;
  * @author Gaëtan HERFRAY
  */
 public class TaskUnitTest {
+
+    List<Project> projects = Arrays.asList(
+            new Project(1, "Projet Tartampion", 0xFFEADAD1),
+            new Project(2, "Projet Lucidia", 0xFFB4CDBA),
+            new Project(3, "Projet Circus", 0xFFA3CED2)
+    );
+
     @Test
     public void test_projects() {
+
         final Task task1 = new Task(1, 1, "task 1", new Date().getTime());
         final Task task2 = new Task(2, 2, "task 2", new Date().getTime());
         final Task task3 = new Task(3, 3, "task 3", new Date().getTime());
         final Task task4 = new Task(4, 4, "task 4", new Date().getTime());
 
-        assertEquals("Projet Tartampion", task1.getProject().getName());
-        assertEquals("Projet Lucidia", task2.getProject().getName());
-        assertEquals("Projet Circus", task3.getProject().getName());
-        assertNull(task4.getProject());
+        assertEquals("Projet Tartampion", getProjectName(task1.getProjectId()));
+        assertEquals("Projet Lucidia", getProjectName(task2.getProjectId()));
+        assertEquals("Projet Circus", getProjectName(task3.getProjectId()));
+        assertNull(getProjectName(task4.getProjectId()));
+    }
+
+    public String getProjectName(long id){
+        for(Project project : projects){
+            if(project.getId() == id)
+                return project.getName();
+        }
+        return null;
     }
 
     @Test

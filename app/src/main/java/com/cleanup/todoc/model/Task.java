@@ -91,10 +91,10 @@ public class Task {
      *
      * @return the project associated to the task
      */
-    @Nullable
-    public Project getProject() {
-        return Project.getProjectById(projectId);
-    }
+//    @Nullable
+//    public Project getProject() {
+//        return Project.getProjectById(projectId);
+//    }
 
     /**
      * Returns the name of the task.

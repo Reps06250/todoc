@@ -1,6 +1,5 @@
 package com.cleanup.todoc.ui;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -28,11 +27,9 @@ import com.cleanup.todoc.model.Task;
 import com.cleanup.todoc.viewmodel.TaskViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * <p>Home activity of the application which is displayed when the user opens the app.</p>

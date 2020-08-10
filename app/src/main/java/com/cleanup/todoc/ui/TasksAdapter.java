@@ -1,7 +1,5 @@
 package com.cleanup.todoc.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
@@ -12,11 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.injection.Injection;
-import com.cleanup.todoc.injection.ViewModelFactory;
+
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
-import com.cleanup.todoc.viewmodel.TaskViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -16,7 +16,7 @@ public class TaskViewModel extends ViewModel {
     // REPOSITORIES
     private final TaskDataRepository taskDataSource;
     private final ProjectDataRepository projectDataSource;
-    private final Executor executor;
+    private final Executor executor; //facilite l'exécution en arrière-plan de certaines méthodes
 
     // DATA
     @Nullable
@@ -28,7 +28,7 @@ public class TaskViewModel extends ViewModel {
         this.executor = executor;
     }
 
-    public void init() {
+    public void init() { //initialise le ViewModel dès que l'activité se crée et qui sera donc appelée à l'intérieur de sa méthode  onCreate()
         if (this.currentTasks != null) {
             return;
         }
@@ -41,7 +41,7 @@ public class TaskViewModel extends ViewModel {
 
     public LiveData<List<Project>> getProjects() { return projectDataSource.getProjects();  }
 
-    public Project getProject(long projectId) { return projectDataSource.getProject(projectId);  }
+//    public Project getProject(long projectId) { return projectDataSource.getProject(projectId);  }
 
 
     // -------------
@@ -52,7 +52,7 @@ public class TaskViewModel extends ViewModel {
         return taskDataSource.getTasks();
     }
 
-
+//We use the Executor class to asynchronously perform the update queries of our SQLite tables.
     public void createTask(Task task) {
         executor.execute(() -> {
             taskDataSource.createTask(task);
@@ -65,9 +65,4 @@ public class TaskViewModel extends ViewModel {
         });
     }
 
-    public void updateTask(Task task) {
-        executor.execute(() -> {
-            taskDataSource.updateTask(task);
-        });
-    }
 }

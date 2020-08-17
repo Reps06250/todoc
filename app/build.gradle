@@ -19,7 +19,7 @@ android {
     lintOptions {
         disable 'RestrictedApi'
     }
-    compileOptions {
+    compileOptions { //pour supporter les lambdas
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }

@@ -12,7 +12,7 @@ import java.util.Comparator;
  *
  * @author Gaëtan HERFRAY
  */
-
+// define the primary/foreign key relation
 @Entity(foreignKeys = @ForeignKey(entity = Project.class,
         parentColumns = "id",
         childColumns = "projectId"))
@@ -21,13 +21,12 @@ public class Task {
     /**
      * The unique identifier of the task
      */
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = true) // automatically generates a unique identifier
     private long id;
 
     /**
      * The unique identifier of the project associated to the task
      */
-//    @ForeignKey(entity = Project.class, parentColumns = "id", childColumns = "projectId")
     private long projectId;
 
     /**
@@ -84,16 +83,6 @@ public class Task {
     private void setProjectId(long projectId) {
         this.projectId = projectId;
     }
-
-    /**
-     * Returns the project associated to the task.
-     *
-     * @return the project associated to the task
-     */
-//    @Nullable
-//    public Project getProject() {
-//        return Project.getProjectById(projectId);
-//    }
 
     /**
      * Returns the name of the task.

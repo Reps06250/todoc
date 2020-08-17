@@ -12,15 +12,15 @@ import android.support.annotation.NonNull;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 
-@Database(entities = {Task.class, Project.class}, version = 1, exportSchema = false)
+@Database(entities = {Task.class, Project.class}, version = 1, exportSchema = false) //lists tables
 public abstract class ToDocDatabase extends RoomDatabase {
-
-    // --- SINGLETON ---
-    private static volatile ToDocDatabase INSTANCE;
 
     // --- DAO ---
     public abstract TaskDao taskDao();
     public abstract ProjectDao projectDao();
+
+    // --- SINGLETON ---
+    private static volatile ToDocDatabase INSTANCE;
 
     // --- INSTANCE ---
     public static ToDocDatabase getInstance(Context context) {

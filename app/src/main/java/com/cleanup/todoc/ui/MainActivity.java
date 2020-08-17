@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
     // 1 - FOR DATA
     public TaskViewModel taskViewModel;
-    public ArrayAdapter<Project> adapter2;
+    public ArrayAdapter<Project> spinerAdapter;
 
     /**
      * List of all projects available in the application
@@ -182,8 +182,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
-                // TODO: Replace this by id of persisted task
-                long id ;//= (long) (Math.random()*10000000);
+                long id ;
                 if (tasks.size() == 0) id = 0;
                 else id = tasks.get(tasks.size()-1).getId() + 1;
 
@@ -311,10 +310,10 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * Sets the data of the Spinner with projects to associate to a new task
      */
     private void populateDialogSpinner() {
-        adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allProjects);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allProjects);
+        spinerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if (dialogSpinner != null) {
-            dialogSpinner.setAdapter(adapter2);
+            dialogSpinner.setAdapter(spinerAdapter);
         }
     }
 

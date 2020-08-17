@@ -31,9 +31,11 @@ public class TaskDaoTest {
     private static Task TASK_DEMO = new Task(tId, 1, "blabla", 999999);
 
     @Rule
+    // force the execution of each test synchronously
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     @Before
+    // create an instance of our database directly in memory
     public void initDb() throws Exception {
         this.database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
                 ToDocDatabase.class)

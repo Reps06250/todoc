@@ -7,6 +7,8 @@ import com.cleanup.todoc.model.Project;
 
 import java.util.List;
 
+//The purpose of the repository is to isolate the data source (DAO) from the ViewModel,
+// who does not directly manipulate the data source.
 public class ProjectDataRepository {
     private final ProjectDao projectDao;
 
@@ -16,6 +18,4 @@ public class ProjectDataRepository {
 
     // --- GET PROJECT ---
     public LiveData<List<Project>> getProjects() { return this.projectDao.getProjects(); }
-
-    public Project getProject(long projectId) { return this.projectDao.getProject(projectId); }
 }
